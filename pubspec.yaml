@@ -44,9 +44,10 @@ dependencies:
 dev_dependencies:
   build_runner: null
   flutter_lints: ^1.0.0
-  freezed: null
+ 
   flutter_test:
     sdk: flutter
+  freezed: null
   
 
 # For information on the generic Dart part of this file, see the
