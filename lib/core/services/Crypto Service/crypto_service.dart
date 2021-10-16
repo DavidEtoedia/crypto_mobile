@@ -1,3 +1,4 @@
+import 'package:crypto_mobile/core/model/exchanges.dart';
 import 'package:crypto_mobile/core/model/get_crypto_list.dart';
 import 'package:crypto_mobile/core/services/api_interceptor.dart';
 import 'package:crypto_mobile/core/services/error_interceptor.dart';
@@ -25,18 +26,42 @@ class CryptoService {
     _dio.interceptors.add(PrettyDioLogger());
   }
 
-  Future<List<CryptoListRes>> getAllcoin(String symbol) async {
-    const url =
-        'v3/coins/markets?vs_currency=btc&order=market_cap_desc&per_page=100&page=1&sparkline=false';
+  Future getAllCoin(String symbol) async {
+    final url = 'v3/coins/markets?vs_currency=$symbol';
     final queryParameters = {
-      'coinId': symbol,
+      "btc": symbol,
     };
     try {
       final response = await _dio.get(
         url,
         queryParameters: queryParameters,
       );
-      final res = cryptoListResFromJson(response.data);
+      final res = List<CryptoListRes>.from(
+          response.data.map((x) => CryptoListRes.fromJson(x)));
+      return res;
+    } on DioError catch (e) {
+      if (e.response != null && e.response!.data != 'btc') {
+        Failure result = Failure.fromJson(e.response!.data);
+        // throw result.message!;
+        throw result;
+      } else {
+        print(e.error);
+        throw e.error;
+      }
+    }
+  }
+
+  Future<List<Exchanges>> getExchanges() async {
+    const url = 'v3/coins/exchanges';
+    // final queryParameters = {
+    //   "btc": symbol,
+    // };
+    try {
+      final response = await _dio.get(
+        url,
+        // queryParameters: queryParameters,
+      );
+      final res = exchangesFromJson(response.data);
       return res;
     } on DioError catch (e) {
       if (e.response != null && e.response!.data != '') {

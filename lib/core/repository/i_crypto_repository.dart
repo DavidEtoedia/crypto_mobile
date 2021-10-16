@@ -1,7 +1,9 @@
+import 'package:crypto_mobile/core/model/exchanges.dart';
 import 'package:crypto_mobile/core/model/get_crypto_list.dart';
 
 abstract class ICryptoRepository {
-  Future<List<CryptoListRes>> getAllcoin(String symbol);
+  Future getAllCoin([String symbol = "btc"]);
+  Future<List<Exchanges>> getExchanges();
   // Future<String> createCustomer(CustomerCreateDto customerCreateDto);
   // Future<GetCustomerRes> getCustomer([String searchBy]);
   // Future<bool> updateCustomer(UpdateCustomer updateCustomer);
