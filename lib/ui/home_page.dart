@@ -2,6 +2,7 @@
 
 import 'package:crypto_mobile/core/model/get_crypto_list.dart';
 import 'package:crypto_mobile/ui/app_barr.dart';
+import 'package:crypto_mobile/ui/screens/cryptolist.dart';
 import 'package:crypto_mobile/ui/top_display.dart';
 import 'package:crypto_mobile/ui/vm/excchange_vm.dart';
 import 'package:crypto_mobile/ui/vm/vm.dart';
@@ -40,48 +41,6 @@ class HomePage extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class CryptoList extends HookConsumerWidget {
-  const CryptoList({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final vm = ref.watch(allCoinProvider);
-
-    return vm.when(loading: () {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    }, idle: () {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    }, success: (coin) {
-      return SizedBox(
-        height: 100.h,
-        child: ListView.separated(
-          itemCount: coin!.length,
-          itemBuilder: (context, index) {
-            final coins = coin[index];
-            return ListTile(
-              subtitle: Text(coins.athDate.toString()),
-              title: Text(
-                coins.name.toString(),
-              ),
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return SizedBox(
-              height: 20.h,
-            );
-          },
-        ),
-      );
-    }, error: (Object error, StackTrace stackTrace) {
-      return Center(child: Text(error.toString()));
-    });
   }
 }
 

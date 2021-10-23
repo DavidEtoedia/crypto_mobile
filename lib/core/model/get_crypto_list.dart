@@ -12,66 +12,66 @@ String cryptoListResToJson(List<CryptoListRes> data) =>
 
 class CryptoListRes {
   CryptoListRes({
-    required this.id,
-    required this.symbol,
-    required this.name,
-    required this.image,
-    required this.currentPrice,
-    required this.marketCap,
-    required this.marketCapRank,
-    required this.fullyDilutedValuation,
-    required this.totalVolume,
-    required this.high24H,
-    required this.low24H,
-    required this.priceChange24H,
-    required this.priceChangePercentage24H,
-    required this.marketCapChange24H,
-    required this.marketCapChangePercentage24H,
-    required this.circulatingSupply,
-    required this.totalSupply,
-    required this.maxSupply,
-    required this.ath,
-    required this.athChangePercentage,
-    required this.athDate,
-    required this.atl,
-    required this.atlChangePercentage,
-    required this.atlDate,
-    required this.roi,
-    required this.lastUpdated,
+    this.id,
+    this.symbol,
+    this.name,
+    this.image,
+    this.currentPrice,
+    this.marketCap,
+    this.marketCapRank,
+    this.fullyDilutedValuation,
+    this.totalVolume,
+    this.high24H,
+    this.low24H,
+    this.priceChange24H,
+    this.priceChangePercentage24H,
+    this.marketCapChange24H,
+    this.marketCapChangePercentage24H,
+    this.circulatingSupply,
+    this.totalSupply,
+    this.maxSupply,
+    this.ath,
+    this.athChangePercentage,
+    this.athDate,
+    this.atl,
+    this.atlChangePercentage,
+    this.atlDate,
+    this.roi,
+    this.lastUpdated,
   });
 
-  String id;
-  String symbol;
-  String name;
-  String image;
-  double currentPrice;
-  int marketCap;
-  int marketCapRank;
-  int fullyDilutedValuation;
-  double totalVolume;
-  double high24H;
-  double low24H;
-  double priceChange24H;
-  double priceChangePercentage24H;
-  double marketCapChange24H;
-  double marketCapChangePercentage24H;
-  double circulatingSupply;
-  double totalSupply;
-  double maxSupply;
-  double ath;
-  double athChangePercentage;
-  DateTime athDate;
-  double atl;
-  double atlChangePercentage;
-  DateTime atlDate;
+  String? id;
+  String? symbol;
+  String? name;
+  String? image;
+  double? currentPrice;
+  int? marketCap;
+  int? marketCapRank;
+  int? fullyDilutedValuation;
+  double? totalVolume;
+  double? high24H;
+  double? low24H;
+  double? priceChange24H;
+  double? priceChangePercentage24H;
+  double? marketCapChange24H;
+  double? marketCapChangePercentage24H;
+  double? circulatingSupply;
+  double? totalSupply;
+  double? maxSupply;
+  double? ath;
+  double? athChangePercentage;
+  DateTime? athDate;
+  double? atl;
+  double? atlChangePercentage;
+  DateTime? atlDate;
   Roi? roi;
-  DateTime lastUpdated;
+  DateTime? lastUpdated;
 
   factory CryptoListRes.fromJson(Map<String, dynamic> json) => CryptoListRes(
-        id: json["id"],
-        symbol: json["symbol"],
-        name: json["name"],
-        image: json["image"],
+        id: json["id"] == null ? null : json["id"],
+        symbol: json["symbol"] == null ? null : json["symbol"],
+        name: json["name"] == null ? null : json["name"],
+        image: json["image"] == null ? null : json["image"],
         currentPrice: json["current_price"] == null
             ? null
             : json["current_price"].toDouble(),
@@ -122,10 +122,10 @@ class CryptoListRes {
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "symbol": symbol,
-        "name": name,
-        "image": image,
+        "id": id == null ? null : id,
+        "symbol": symbol == null ? null : symbol,
+        "name": name == null ? null : name,
+        "image": image == null ? null : image,
         "current_price": currentPrice == null ? null : currentPrice,
         "market_cap": marketCap == null ? null : marketCap,
         "market_cap_rank": marketCapRank == null ? null : marketCapRank,
@@ -149,13 +149,13 @@ class CryptoListRes {
         "ath": ath == null ? null : ath,
         "ath_change_percentage":
             athChangePercentage == null ? null : athChangePercentage,
-        "ath_date": athDate.toIso8601String(),
+        "ath_date": athDate!.toIso8601String(),
         "atl": atl == null ? null : atl,
         "atl_change_percentage":
             atlChangePercentage == null ? null : atlChangePercentage,
-        "atl_date": atlDate.toIso8601String(),
+        "atl_date": atlDate!.toIso8601String(),
         "roi": roi == null ? null : roi?.toJson(),
-        "last_updated": lastUpdated.toIso8601String(),
+        "last_updated": lastUpdated!.toIso8601String(),
       };
 }
 

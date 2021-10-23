@@ -24,6 +24,7 @@ class AllCoinVM extends RequestStateNotifier {
 
 
 
+
 // final allCoinProvider = FutureProvider.autoDispose
 //     .family< dynamic, String>((ref, symbol) async {
 //   return ref.watch(cryptoProvider).getAllCoin(symbol = "btc");
