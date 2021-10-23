@@ -29,7 +29,7 @@ class CryptoService {
   Future getAllCoin(String symbol) async {
     final url = 'v3/coins/markets?vs_currency=$symbol';
     final queryParameters = {
-      "btc": symbol,
+      "vs_currency": symbol,
     };
     try {
       final response = await _dio.get(
@@ -38,6 +38,7 @@ class CryptoService {
       );
       final res = List<CryptoListRes>.from(
           response.data.map((x) => CryptoListRes.fromJson(x)));
+
       return res;
     } on DioError catch (e) {
       if (e.response != null && e.response!.data != 'btc') {
