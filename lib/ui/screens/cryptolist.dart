@@ -22,7 +22,7 @@ class CryptoList extends HookConsumerWidget {
     }, success: (coin) {
       return Expanded(
         child: ListView.separated(
-          itemCount: coin!.length,
+          itemCount: coin.length,
           itemBuilder: (context, index) {
             final coins = coin[index];
             return CryptoBuild(coinList: coins);

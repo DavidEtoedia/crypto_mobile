@@ -1,5 +1,6 @@
 // import 'dart:io';
 
+import 'package:crypto_mobile/core/model/coin_by_id_res.dart';
 import 'package:crypto_mobile/core/model/exchanges.dart';
 import 'package:crypto_mobile/core/model/get_crypto_list.dart';
 import 'package:crypto_mobile/core/repository/i_crypto_repository.dart';
@@ -17,14 +18,20 @@ class CryptoRepository extends ICryptoRepository {
   CryptoRepository(this._cryptoService);
 
   @override
-  Future getAllCoin([String symbol = "btc"]) async {
-    final coinList = await _cryptoService.getAllCoin(symbol = "btc");
+  Future getAllCoin(
+      [String symbol = "btc", String order = "market_cap_desc"]) async {
+    final coinList = await _cryptoService.getAllCoin(symbol, order);
     return coinList;
   }
 
   @override
   Future<List<Exchanges>> getExchanges() async {
     return await _cryptoService.getExchanges();
+  }
+
+  @override
+  Future<CoinById> getCoinbyId(String coinById) async {
+    return await _cryptoService.getCoinbyId(coinById);
   }
 
   //

@@ -1,4 +1,5 @@
 import 'package:crypto_mobile/ui/home_page.dart';
+import 'package:crypto_mobile/utils/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(428, 926),
       builder: () => MaterialApp(
+          navigatorKey: navigator.key,
           title: 'Flutter Demo',
           theme: ThemeData(
             primarySwatch: Colors.blue,
