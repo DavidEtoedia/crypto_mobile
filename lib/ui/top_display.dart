@@ -1,122 +1,72 @@
+import 'package:crypto_mobile/core/model/get_crypto_list.dart';
+import 'package:crypto_mobile/ui/vm/vm.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class TopDisplay extends StatelessWidget {
+class TopDisplay extends HookConsumerWidget {
   const TopDisplay({
     Key? key,
   }) : super(key: key);
 
   @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final vm = ref.watch(allCoinProvider);
+
+    return vm.when(idle: () {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }, loading: () {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }, success: (data) {
+      return SizedBox(
+        height: 30,
+        width: 300,
+        child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: data!.length,
+            itemBuilder: (context, index) {
+              final coinss = data[index];
+              return TopText(coin: coinss);
+            }),
+      );
+    }, error: (Object error, StackTrace stackTrace) {
+      return Text(error.toString());
+    });
+  }
+}
+
+class TopText extends StatelessWidget {
+  final CryptoListRes coin;
+  const TopText({Key? key, required this.coin}) : super(key: key);
+
+  @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Market Cap',
-                style: GoogleFonts.asap(
-                    color: Colors.grey,
-                    fontSize: 13.sp,
-                    fontWeight: FontWeight.w400)
+        Text(coin.name!,
+            style: GoogleFonts.asap(
+                color: Colors.white,
+                fontSize: 15.sp,
+                fontWeight: FontWeight.w400)
 
-                // TextStyle(color: Colors.white, fontSize: 20.sp),
-                ),
-            SizedBox(
-              height: 15.h,
+            // TextStyle(color: Colors.white, fontSize: 20.sp),
             ),
-            Text('${1.7}b',
-                style: GoogleFonts.asap(
-                    color: Colors.white,
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w700)
-
-                // TextStyle(color: Colors.white, fontSize: 20.sp),
-                ),
-            SizedBox(
-              height: 10.h,
-            ),
-            Text('BTC Dominance',
-                style: GoogleFonts.asap(
-                    color: Colors.grey,
-                    fontSize: 13.sp,
-                    fontWeight: FontWeight.w400)
-
-                // TextStyle(color: Colors.white, fontSize: 20.sp),
-                ),
-          ],
+        SizedBox(
+          width: 10,
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('24h Volume',
-                style: GoogleFonts.asap(
-                    color: Colors.grey,
-                    fontSize: 13.sp,
-                    fontWeight: FontWeight.w400)
+        Text(coin.symbol!,
+            style: GoogleFonts.asap(
+                color: Colors.white,
+                fontSize: 15.sp,
+                fontWeight: FontWeight.w400)
 
-                // TextStyle(color: Colors.white, fontSize: 20.sp),
-                ),
-            SizedBox(
-              height: 15.h,
+            // TextStyle(color: Colors.white, fontSize: 20.sp),
             ),
-            Text('${1.7}b',
-                style: GoogleFonts.asap(
-                    color: Colors.white,
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w700)
-
-                // TextStyle(color: Colors.white, fontSize: 20.sp),
-                ),
-            SizedBox(
-              height: 10.h,
-            ),
-            Text('BTC Dominance',
-                style: GoogleFonts.asap(
-                    color: Colors.grey,
-                    fontSize: 13.sp,
-                    fontWeight: FontWeight.w400)
-
-                // TextStyle(color: Colors.white, fontSize: 20.sp),
-                ),
-          ],
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('BTC Dominance',
-                style: GoogleFonts.asap(
-                    color: Colors.grey,
-                    fontSize: 13.sp,
-                    fontWeight: FontWeight.w400)
-
-                // TextStyle(color: Colors.white, fontSize: 20.sp),
-                ),
-            SizedBox(
-              height: 15.h,
-            ),
-            Text('${1.7}b',
-                style: GoogleFonts.asap(
-                    color: Colors.white,
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w700)
-
-                // TextStyle(color: Colors.white, fontSize: 20.sp),
-                ),
-            SizedBox(
-              height: 10.h,
-            ),
-            Text('BTC Dominance',
-                style: GoogleFonts.asap(
-                    color: Colors.grey,
-                    fontSize: 13.sp,
-                    fontWeight: FontWeight.w400)
-
-                // TextStyle(color: Colors.white, fontSize: 20.sp),
-                ),
-          ],
-        ),
       ],
     );
   }
