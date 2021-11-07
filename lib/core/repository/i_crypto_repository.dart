@@ -6,6 +6,8 @@ abstract class ICryptoRepository {
   Future getAllCoin([String symbol, String order]);
   Future<CoinById> getCoinbyId(String coinById);
   Future<List<Exchanges>> getExchanges();
+  Future getBitCoin([String bitcoin = 'bitcoin']);
+
   // Future<String> createCustomer(CustomerCreateDto customerCreateDto);
   // Future<GetCustomerRes> getCustomer([String searchBy]);
   // Future<bool> updateCustomer(UpdateCustomer updateCustomer);

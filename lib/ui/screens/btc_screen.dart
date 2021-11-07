@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 // import 'package:spine_project/utils/navigator.dart';
 
 class CoinDisplayScreen extends HookConsumerWidget {
@@ -35,10 +36,7 @@ class CoinDisplayScreen extends HookConsumerWidget {
                         style: GoogleFonts.asap(
                             color: Colors.white,
                             fontSize: 23.sp,
-                            fontWeight: FontWeight.w400)
-
-                        // TextStyle(color: Colors.white, fontSize: 20.sp),
-                        );
+                            fontWeight: FontWeight.w400));
                   },
                   error: (Object error, StackTrace? stackTrace,
                       AsyncData<CoinById>? previous) {
@@ -49,6 +47,61 @@ class CoinDisplayScreen extends HookConsumerWidget {
                     return const Center(child: CircularProgressIndicator());
                   },
                 ),
+                SizedBox(
+                  height: 70.h,
+                ),
+                vm.when(
+                  data: (data) {
+                    final List<Ticker> tickers = <Ticker>[
+                      Ticker(
+                        last: data.marketData!.priceChangePercentage30D,
+                      ),
+                      Ticker(
+                          lastTradedAt: DateTime.tryParse(
+                              data.lastUpdated!.toIso8601String())),
+                      Ticker(
+                          lastTradedAt: DateTime.tryParse(
+                              data.lastUpdated!.toIso8601String()))
+                    ];
+                    return Container(
+                      height: 400.h,
+                      width: 350.w,
+                      child: SfCartesianChart(
+                          primaryXAxis: CategoryAxis(),
+                          series: <LineSeries<Ticker, dynamic>>[
+                            LineSeries<Ticker, dynamic>(
+                                dataSource: tickers,
+                                xValueMapper: (Ticker ticker, _) =>
+                                    ticker.lastTradedAt,
+                                yValueMapper: (Ticker ticker, _) =>
+                                    ticker.last),
+                          ]),
+                    );
+                  },
+                  error: (Object error, StackTrace? stackTrace,
+                      AsyncData<CoinById>? previous) {
+                    print(error);
+                    return Text(error.toString());
+                  },
+                  loading: (AsyncValue<CoinById>? previous) {
+                    return const Center(child: CircularProgressIndicator());
+                  },
+                ),
+                // Container(
+                //   height: 400.h,
+                //   width: 350.w,
+                //   child: SfCartesianChart(
+                //     series: <LineSeries<Ticker, String>>[
+                //       LineSeries<Ticker, String>(
+                //         dataSource: <Ticker>[
+                //           Ticker(market: )
+
+                //         ],
+                //         xValueMapper: xValueMapper,
+                //         yValueMapper: yValueMapper)
+                //     ]
+                //   ),
+                // )
               ],
             ),
           ),

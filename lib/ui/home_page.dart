@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
               ),
               const AppBarr(),
               SizedBox(
-                height: 50.h,
+                height: 30.h,
               ),
               const TopDisplay(),
               SizedBox(
