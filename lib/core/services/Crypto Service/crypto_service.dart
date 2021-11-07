@@ -104,108 +104,32 @@ class CryptoService {
     }
   }
 
-//   Future<bool> createItem(AddItem addItem) async {
-//     const url = 'Product';
-//     try {
-//       final response = await _dio.post(url,
-//           data: addItem.toJson(),
-//           options: Options(headers: {"requireToken": true}));
-//       final result = response.data = true;
-//       return result;
-//     } on DioError catch (e) {
-//       if (e.response != null && e.response!.data != '') {
-//         Failure result = Failure.fromJson(e.response!.data);
-//         // throw result.message!;
-//         throw result;
-//       } else {
-//         print(e.error);
-//         throw e.error;
-//       }
-//     }
-//   }
+  Future getBitCoin([String bitcoin = 'bitcoin']) async {
+    final url = 'v3/coins/$bitcoin';
+    final queryParameters = {
+      "id": bitcoin,
+    };
+    try {
+      final response = await _dio.get(
+        url,
 
-//   Future<List<GetItemRes>> getItem([String searchBy = '']) async {
-//     const url = 'Product/slim';
-//     var queryParameters = {"Search": searchBy};
-//     try {
-//       final response = await _dio.get(url,
-//           queryParameters: queryParameters,
-//           options: Options(headers: {"requireToken": true}));
-//       final result = getItemResFromJson(response.data);
-//       return result;
-//     } on DioError catch (e) {
-//       if (e.response != null && e.response!.data != '') {
-//         Failure result = Failure.fromJson(e.response!.data);
-//         // throw result.message!;
-//         throw result;
-//       } else {
-//         print(e.error);
-//         throw e.error;
-//       }
-//     }
-//   }
+        // queryParameters: queryParameters,
+      );
+      final res =
+          // response.data;
 
-//   Future<List<InventoryList>> getList([String searchBy = '']) async {
-//     const url = 'Inventory/slim';
-//     var queryParameters = {"Search": searchBy};
-//     try {
-//       final response = await _dio.get(url,
-//           queryParameters: queryParameters,
-//           options: Options(headers: {"requireToken": true}));
-//       final result = inventoryListFromJson(response.data);
-//       return result;
-//     } on DioError catch (e) {
-//       if (e.response != null && e.response!.data != '') {
-//         Failure result = Failure.fromJson(e.response!.data);
-//         // throw result.message!;
-//         throw result;
-//       } else {
-//         print(e.error);
-//         throw e.error;
-//       }
-//     }
-//   }
+          CoinById.fromJson(response.data);
 
-//   Future<bool> addCategory(AddCategoryRes addCategoryRes) async {
-//     const url = 'Product/categories';
-//     try {
-//       final response = await _dio.post(url,
-//           data: addCategoryRes.toJson(),
-//           options: Options(headers: {"requireToken": true}));
-//       final result = response.data = true;
-//       return result;
-//     } on DioError catch (e) {
-//       if (e.response != null && e.response!.data != '') {
-//         Failure result = Failure.fromJson(e.response!.data);
-//         // throw result.message!;
-//         throw result;
-//       } else {
-//         print(e.error);
-//         throw e.error;
-//       }
-//     }
-//   }
-
-//   Future<List<GetCategoryRes>> getCategory([String searchBy = '']) async {
-//     const url = 'Product/categories/slim';
-//     var queryParameters = {"Search": searchBy};
-//     try {
-//       final response = await _dio.get(url,
-//           queryParameters: queryParameters,
-//           options: Options(headers: {"requireToken": true}));
-//       final result = getCategoryResFromJson(response.data);
-//       return result;
-//     } on DioError catch (e) {
-//       if (e.response != null && e.response!.data != '') {
-//         Failure result = Failure.fromJson(e.response!.data);
-//         // throw result.message!;
-//         throw result;
-//       } else {
-//         print(e.error);
-//         throw e.error;
-//       }
-//     }
-//   }
-// }
-
+      return res;
+    } on DioError catch (e) {
+      if (e.response != null && e.response!.data != '') {
+        Failure result = Failure.fromJson(e.response!.data);
+        // throw result.message!;
+        throw result;
+      } else {
+        print(e.error);
+        throw e.error;
+      }
+    }
+  }
 }

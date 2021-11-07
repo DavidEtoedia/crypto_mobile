@@ -34,52 +34,8 @@ class CryptoRepository extends ICryptoRepository {
     return await _cryptoService.getCoinbyId(coinById);
   }
 
-  //
-  // @override
-  // Future<String> createCustomer(CustomerCreateDto customerCreateDto) async {
-  //   return await _customerService.createCustomer(customerCreateDto);
-  // }
-
-  // @override
-  // Future<GetCustomerRes> getCustomer([String searchBy = '']) async {
-  //   return await _customerService.getCustomer(searchBy);
-  // }
-
-  // @override
-  // Future<bool> updateCustomer(UpdateCustomer updateCustomer) async {
-  //   return await _customerService.updateCustomer(updateCustomer);
-  // }
-
-  // @override
-  // Future<GetAllCustomerById> getAllCustomerById(String customerId) async {
-  //   return await _customerService.getAllCustomerById(customerId);
-  // }
-
-  // @override
-  // Future<bool> uploadFile(String filePath) async {
-  //   final res = await _customerService.uploadFile(filePath);
-  //   return res;
-  // }
-
-  // @override
-  // Future<GetAllCustomerById> addCustomerNote(
-  //     String customerId, String note) async {
-  //   return await _customerService.addCustomerNote(customerId, note);
-  // }
-
-  // @override
-  // Future<GetAllCustomer> getAllCustomer((String customerId)) async {
-  //   return await _customerService.getAllCustomer((customerId);
-  // }
-
-  // @override
-  // Future<List<GetAllCustomer>> getAllCustomer(
-  //     GetAllCustomer getAllCustomer) async {
-  //   return await _customerService.getAllCustomer(getAllCustomer);
-  // }
-
-  // @override
-  // Future<GetAllCustomer> getAllCustomer(GetAllCustomer getAllCustomer) async {
-  //   return await _customerService.getAllCustomer(getAllCustomer);
-  // }
+  @override
+  Future getBitCoin([String bitcoin = 'bitcoin']) async {
+    return await _cryptoService.getBitCoin(bitcoin);
+  }
 }

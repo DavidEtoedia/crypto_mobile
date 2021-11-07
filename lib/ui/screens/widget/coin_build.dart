@@ -3,6 +3,7 @@ import 'package:crypto_mobile/ui/screens/btc_screen.dart';
 import 'package:crypto_mobile/utils/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 class CryptoBuild extends StatelessWidget {
   final CryptoListRes coinList;
@@ -10,6 +11,7 @@ class CryptoBuild extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var format = NumberFormat("###,###", "en_US");
     return InkWell(
       onTap: () => context.navigate(CoinDisplayScreen(
         coinById: coinList.id!,
@@ -57,10 +59,10 @@ class CryptoBuild extends StatelessWidget {
           ),
           Spacer(),
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                coinList.marketCap.toString(),
+                "\$" + format.format(coinList.marketCap),
                 style: TextStyle(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w400,
@@ -69,12 +71,33 @@ class CryptoBuild extends StatelessWidget {
               SizedBox(
                 height: 5.h,
               ),
-              Text(
-                coinList.marketCapRank.toString(),
-                style: TextStyle(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  coinList.marketCapChangePercentage24H! > 0.0
+                      ? Icon(
+                          Icons.arrow_drop_up_outlined,
+                          color: Colors.greenAccent[400],
+                        )
+                      : const Icon(
+                          Icons.arrow_drop_down_outlined,
+                          color: Colors.red,
+                        ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 2.5),
+                    child: Text(
+                        coinList.marketCapChangePercentage24H!
+                                .toStringAsFixed(1) +
+                            '%',
+                        style: TextStyle(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w400,
+                          color: coinList.marketCapChangePercentage24H! > 0.0
+                              ? Colors.greenAccent[400]
+                              : Colors.red,
+                        )),
+                  ),
+                ],
               ),
             ],
           ),
