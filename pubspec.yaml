@@ -27,6 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  candlesticks: ^1.1.1
   connectivity: ^3.0.6
   cupertino_icons: ^1.0.2
   dio: ^4.0.0
@@ -34,12 +35,14 @@ dependencies:
     sdk: flutter
   flutter_hooks: ^0.18.0
   flutter_screenutil: ^5.0.0+2
+  flutter_switch: ^0.3.2
   freezed_annotation: null
   google_fonts: ^2.1.0
   hooks_riverpod: ^1.0.0-dev.6
   intl: ^0.17.0
   pretty_dio_logger: ^1.1.1
   shared_preferences: ^2.0.7
+  shimmer: ^2.0.0
   syncfusion_flutter_charts: ^19.3.48
   top_snackbar_flutter: ^1.0.1
 
