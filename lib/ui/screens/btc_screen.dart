@@ -17,95 +17,112 @@ class CoinDisplayScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final vm = ref.watch(coinByIdProvider(coinById));
     return Scaffold(
-        backgroundColor: const Color(0xff171520),
         body: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.only(left: 30.w, right: 30.w),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 40.h,
-                ),
-                DisplayScreenBar(coinById),
-                SizedBox(
-                  height: 40.h,
-                ),
-                vm.when(
-                  data: (data) {
-                    return Text(data.marketData!.priceChange24H.toString(),
-                        style: GoogleFonts.asap(
-                            color: Colors.white,
-                            fontSize: 23.sp,
-                            fontWeight: FontWeight.w400));
-                  },
-                  error: (Object error, StackTrace? stackTrace,
-                      AsyncData<CoinById>? previous) {
-                    print(error);
-                    return Text(error.toString());
-                  },
-                  loading: (AsyncValue<CoinById>? previous) {
-                    return const Center(child: CircularProgressIndicator());
-                  },
-                ),
-                SizedBox(
-                  height: 70.h,
-                ),
-                vm.when(
-                  data: (data) {
-                    final List<Ticker> tickers = <Ticker>[
-                      Ticker(
-                        last: data.marketData!.priceChangePercentage30D,
-                      ),
-                      Ticker(
-                          lastTradedAt: DateTime.tryParse(
-                              data.lastUpdated!.toIso8601String())),
-                      Ticker(
-                          lastTradedAt: DateTime.tryParse(
-                              data.lastUpdated!.toIso8601String()))
-                    ];
-                    return Container(
-                      height: 400.h,
-                      width: 350.w,
-                      child: SfCartesianChart(
-                          primaryXAxis: CategoryAxis(),
-                          series: <LineSeries<Ticker, dynamic>>[
-                            LineSeries<Ticker, dynamic>(
-                                dataSource: tickers,
-                                xValueMapper: (Ticker ticker, _) =>
-                                    ticker.lastTradedAt,
-                                yValueMapper: (Ticker ticker, _) =>
-                                    ticker.last),
-                          ]),
-                    );
-                  },
-                  error: (Object error, StackTrace? stackTrace,
-                      AsyncData<CoinById>? previous) {
-                    print(error);
-                    return Text(error.toString());
-                  },
-                  loading: (AsyncValue<CoinById>? previous) {
-                    return const Center(child: CircularProgressIndicator());
-                  },
-                ),
-                // Container(
-                //   height: 400.h,
-                //   width: 350.w,
-                //   child: SfCartesianChart(
-                //     series: <LineSeries<Ticker, String>>[
-                //       LineSeries<Ticker, String>(
-                //         dataSource: <Ticker>[
-                //           Ticker(market: )
-
-                //         ],
-                //         xValueMapper: xValueMapper,
-                //         yValueMapper: yValueMapper)
-                //     ]
-                //   ),
-                // )
-              ],
+      child: Padding(
+        padding: EdgeInsets.only(left: 30.w, right: 30.w),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 40.h,
             ),
-          ),
-        ));
+            DisplayScreenBar(coinById),
+            SizedBox(
+              height: 40.h,
+            ),
+            vm.when(
+              data: (data) {
+                return Text(data.marketData!.priceChange24H.toString(),
+                    style: GoogleFonts.asap(
+                        color: Colors.white,
+                        fontSize: 23.sp,
+                        fontWeight: FontWeight.w400));
+              },
+              error: (Object error, StackTrace? stackTrace,
+                  AsyncData<CoinById>? previous) {
+                print(error);
+                return Text(error.toString());
+              },
+              loading: (AsyncValue<CoinById>? previous) {
+                return const Center(child: CircularProgressIndicator());
+              },
+            ),
+            SizedBox(
+              height: 70.h,
+            ),
+            vm.when(
+              data: (data) {
+                final List<Ticker> tickers = [
+                  Ticker(
+                      last: data.marketData!.priceChangePercentage30D,
+                      volume: 10,
+                      coinId: coinById),
+                  Ticker(
+                      last: data.marketData!.priceChangePercentage14D,
+                      volume: 20,
+                      coinId: coinById),
+                  Ticker(
+                      last: data.marketData!.priceChangePercentage200D,
+                      volume: 30,
+                      coinId: coinById),
+                  Ticker(
+                      last: data.marketData!.priceChangePercentage60D,
+                      volume: 40,
+                      coinId: coinById),
+                  Ticker(
+                      last: data.marketData!.priceChangePercentage7D,
+                      volume: 50,
+                      coinId: coinById),
+                  Ticker(
+                      last: data.marketData!.priceChangePercentage24H,
+                      volume: 60,
+                      coinId: coinById),
+                  Ticker(
+                      last: data.marketData!.priceChange24H,
+                      volume: 60,
+                      coinId: coinById),
+                ];
+                return Container(
+                  height: 400.h,
+                  width: 350.w,
+                  child: SfCartesianChart(
+                      primaryXAxis: CategoryAxis(),
+                      series: <FastLineSeries<Ticker, dynamic>>[
+                        FastLineSeries<Ticker, dynamic>(
+                            dataSource: tickers,
+                            xValueMapper: (Ticker data, _) =>
+                                data.volume.toString(),
+                            yValueMapper: (Ticker data, _) => data.last),
+                      ]),
+                );
+              },
+              error: (Object error, StackTrace? stackTrace,
+                  AsyncData<CoinById>? previous) {
+                print(error);
+                return Text(error.toString());
+              },
+              loading: (AsyncValue<CoinById>? previous) {
+                return const Center(child: CircularProgressIndicator());
+              },
+            ),
+            // Container(
+            //   height: 400.h,
+            //   width: 350.w,
+            //   child: SfCartesianChart(
+            //     series: <LineSeries<Ticker, String>>[
+            //       LineSeries<Ticker, String>(
+            //         dataSource: <Ticker>[
+            //           Ticker(market: )
+
+            //         ],
+            //         xValueMapper: xValueMapper,
+            //         yValueMapper: yValueMapper)
+            //     ]
+            //   ),
+            // )
+          ],
+        ),
+      ),
+    ));
   }
 }
 

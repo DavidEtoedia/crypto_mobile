@@ -1,5 +1,6 @@
 import 'package:crypto_mobile/core/model/coin_by_id_res.dart';
 import 'package:crypto_mobile/core/model/get_crypto_list.dart';
+import 'package:crypto_mobile/ui/theme/app_theme_state.dart';
 import 'package:crypto_mobile/ui/vm/bitcoin_vm.dart';
 import 'package:crypto_mobile/ui/vm/vm.dart';
 import 'package:flutter/material.dart';
@@ -33,12 +34,13 @@ class TopDisplay extends HookConsumerWidget {
   }
 }
 
-class TopText extends StatelessWidget {
+class TopText extends HookConsumerWidget {
   final CoinById coin;
   const TopText({Key? key, required this.coin}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isEnabled = ref.watch(appThemeStateProvider);
     var format = NumberFormat("###,###.0#", "en_US");
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -63,7 +65,7 @@ class TopText extends StatelessWidget {
                         .toStringAsFixed(1) +
                     'B',
                 style: GoogleFonts.asap(
-                    color: Colors.white,
+                    color: isEnabled ? Colors.white : Colors.black,
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w600)
 
@@ -89,9 +91,9 @@ class TopText extends StatelessWidget {
                 '\$' +
                     coin.marketData!.priceChangePercentage24H!
                         .toStringAsFixed(1) +
-                    "%",
+                    "B",
                 style: GoogleFonts.asap(
-                    color: Colors.white,
+                    color: isEnabled ? Colors.white : Colors.black,
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w600)
 
@@ -115,7 +117,7 @@ class TopText extends StatelessWidget {
             ),
             Text(coin.publicInterestScore!.toStringAsFixed(2) + "%",
                 style: GoogleFonts.asap(
-                    color: Colors.white,
+                    color: isEnabled ? Colors.white : Colors.black,
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w600)
 

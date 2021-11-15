@@ -1,16 +1,19 @@
 import 'package:crypto_mobile/core/model/get_crypto_list.dart';
 import 'package:crypto_mobile/ui/screens/btc_screen.dart';
+import 'package:crypto_mobile/ui/theme/app_theme_state.dart';
 import 'package:crypto_mobile/utils/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
-class CryptoBuild extends StatelessWidget {
+class CryptoBuild extends HookConsumerWidget {
   final CryptoListRes coinList;
   const CryptoBuild({Key? key, required this.coinList}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isEnabled = ref.watch(appThemeStateProvider);
     var format = NumberFormat("###,###", "en_US");
     return InkWell(
       onTap: () => context.navigate(CoinDisplayScreen(
@@ -21,10 +24,15 @@ class CryptoBuild extends StatelessWidget {
           Container(
             height: 55.h,
             width: 55.w,
-            decoration: const BoxDecoration(boxShadow: [
-              BoxShadow(
-                  color: Colors.black12, blurRadius: 5, offset: Offset(1, 1))
-            ], shape: BoxShape.circle, color: Color(0xff201f28)),
+            decoration: BoxDecoration(
+                boxShadow: const [
+                  BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 5,
+                      offset: Offset(1, 1))
+                ],
+                shape: BoxShape.circle,
+                color: isEnabled ? const Color(0xff201f28) : Colors.grey[300]),
             child: Container(
               margin: EdgeInsets.all(10.w),
               height: 40.h,
@@ -43,7 +51,7 @@ class CryptoBuild extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w500,
-                    color: Colors.white),
+                    color: isEnabled ? Colors.white : Colors.black),
               ),
               SizedBox(
                 height: 5.h,
@@ -66,7 +74,7 @@ class CryptoBuild extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w400,
-                    color: Colors.white),
+                    color: isEnabled ? Colors.white : Colors.black),
               ),
               SizedBox(
                 height: 5.h,
