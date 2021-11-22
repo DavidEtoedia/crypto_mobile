@@ -1,5 +1,6 @@
 import 'package:crypto_mobile/core/model/coin_by_id_res.dart';
 import 'package:crypto_mobile/ui/vm/coin_by_id.dart';
+import 'package:crypto_mobile/ui/vm/vm.dart';
 import 'package:crypto_mobile/utils/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -133,11 +134,15 @@ class DisplayScreenBar extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final vm = ref.watch(coinByIdProvider(coin));
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         InkWell(
-          onTap: () => context.popView(),
+          onTap: () {
+            context.popView();
+            ref.refresh(allCoinProvider);
+          },
           child: Container(
             height: 60.h,
             width: 60.w,

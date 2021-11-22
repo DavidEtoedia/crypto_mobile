@@ -24,17 +24,38 @@ class CryptoList extends HookConsumerWidget {
       // );
     }, success: (coin) {
       return Expanded(
-        child: ListView.separated(
-          itemCount: coin.length,
-          itemBuilder: (context, index) {
-            final coins = coin[index];
-            return CryptoBuild(coinList: coins);
+        child: ShaderMask(
+          shaderCallback: (Rect bound) {
+            return const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.purple,
+                Colors.transparent,
+                Colors.transparent,
+                Colors.purple
+              ],
+              stops: [
+                0.0,
+                0.02,
+                0.8,
+                1.0
+              ], // 10% purple, 80% transparent, 10% purple
+            ).createShader(bound);
           },
-          separatorBuilder: (BuildContext context, int index) {
-            return SizedBox(
-              height: 20.h,
-            );
-          },
+          blendMode: BlendMode.dstOut,
+          child: ListView.separated(
+            itemCount: coin.length,
+            itemBuilder: (context, index) {
+              final coins = coin[index];
+              return CryptoBuild(coinList: coins);
+            },
+            separatorBuilder: (BuildContext context, int index) {
+              return SizedBox(
+                height: 25.h,
+              );
+            },
+          ),
         ),
       );
     }, error: (Object error, StackTrace stackTrace) {

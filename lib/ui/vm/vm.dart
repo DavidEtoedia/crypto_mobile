@@ -17,6 +17,8 @@ class AllCoinVM extends RequestStateNotifier {
   }
 
   void getCoin() => makeRequest(() => _cryptoRepository.getAllCoin());
+  void searchby(String id) =>
+      makeRequest(() => _cryptoRepository.getAllCoin(id));
 // List<String>? _categoriesFilter = [];
 //  _authManager.businessType() = _categoriesFilter;
 }
