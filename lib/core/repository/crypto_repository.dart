@@ -3,6 +3,7 @@
 import 'package:crypto_mobile/core/model/coin_by_id_res.dart';
 import 'package:crypto_mobile/core/model/exchanges.dart';
 import 'package:crypto_mobile/core/model/get_crypto_list.dart';
+import 'package:crypto_mobile/core/model/trending_coin.dart';
 import 'package:crypto_mobile/core/repository/i_crypto_repository.dart';
 import 'package:crypto_mobile/core/services/Crypto%20Service/crypto_service.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -18,9 +19,12 @@ class CryptoRepository extends ICryptoRepository {
   CryptoRepository(this._cryptoService);
 
   @override
-  Future getAllCoin(
-      [String symbol = "btc", String order = "market_cap_desc"]) async {
-    final coinList = await _cryptoService.getAllCoin(symbol, order);
+  Future getAllCoin([
+    String ids = '',
+  ]) async {
+    final coinList = await _cryptoService.getAllCoin(
+      ids,
+    );
     return coinList;
   }
 
@@ -37,5 +41,15 @@ class CryptoRepository extends ICryptoRepository {
   @override
   Future getBitCoin([String bitcoin = 'bitcoin']) async {
     return await _cryptoService.getBitCoin(bitcoin);
+  }
+
+  @override
+  Future searchCoin([String id = '']) async {
+    return await _cryptoService.getAllCoin(id);
+  }
+
+  @override
+  Future<TrendingCoin> trendingCoin() async {
+    return await _cryptoService.trendingCoin();
   }
 }
