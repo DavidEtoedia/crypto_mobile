@@ -3,12 +3,12 @@ import 'package:crypto_mobile/core/model/exchanges.dart';
 import 'package:crypto_mobile/core/repository/crypto_repository.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final exchangeListProvider =
-    StateNotifierProvider<ExchangeListVM, RequestState>(
+final exchangeListProvider = StateNotifierProvider.autoDispose<ExchangeListVM,
+    RequestState<List<Exchanges>>>(
   (ref) => ExchangeListVM(ref),
 );
 
-class ExchangeListVM extends RequestStateNotifier<List> {
+class ExchangeListVM extends RequestStateNotifier<List<Exchanges>> {
   final CryptoRepository _cryptoRepository;
 
   ExchangeListVM(ProviderRefBase ref)
@@ -17,6 +17,4 @@ class ExchangeListVM extends RequestStateNotifier<List> {
   }
 
   void getExchange() => makeRequest(() => _cryptoRepository.getExchanges());
-  void searchByCustomer(String searchBy) =>
-      makeRequest(() => _cryptoRepository.getExchanges());
 }
