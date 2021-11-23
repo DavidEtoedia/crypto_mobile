@@ -54,7 +54,7 @@ class CryptoService {
   }
 
   Future<List<Exchanges>> getExchanges() async {
-    const url = 'v3/coins/exchange';
+    const url = 'v3/exchanges';
     // final queryParameters = {
     //   "btc": symbol,
     // };
@@ -63,7 +63,8 @@ class CryptoService {
         url,
         // queryParameters: queryParameters,
       );
-      final res = exchangesFromJson(response.data);
+      final res =
+          List<Exchanges>.from(response.data.map((x) => Exchanges.fromJson(x)));
       return res;
     } on DioError catch (e) {
       if (e.response != null && e.response!.data != '') {

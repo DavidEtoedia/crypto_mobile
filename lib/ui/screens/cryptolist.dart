@@ -1,4 +1,4 @@
-import 'package:crypto_mobile/ui/screens/widget/coin_build.dart';
+import 'package:crypto_mobile/ui/screens/coin_build.dart';
 import 'package:crypto_mobile/ui/vm/vm.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -87,10 +87,10 @@ class _LoadingAnimationState extends State<LoadingAnimation> {
               Container(
                 width: 48.0,
                 height: 48.0,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     shape: BoxShape.circle, color: Colors.black26),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Expanded(
