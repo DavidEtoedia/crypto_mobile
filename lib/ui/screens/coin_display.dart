@@ -1,12 +1,15 @@
 import 'package:crypto_mobile/core/model/coin_by_id_res.dart' as eos;
 import 'package:crypto_mobile/ui/screens/exchange_list.dart';
 import 'package:crypto_mobile/ui/vm/coin_by_id.dart';
+import 'package:crypto_mobile/ui/vm/trending_coin_vm.dart';
 import 'package:crypto_mobile/ui/vm/vm.dart';
 import 'package:crypto_mobile/utils/navigator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shimmer/shimmer.dart';
 
 import 'package:syncfusion_flutter_charts/charts.dart';
 // import 'package:spine_project/utils/navigator.dart';
@@ -45,11 +48,14 @@ class CoinDisplayScreen extends HookConsumerWidget {
                 return Text(error.toString());
               },
               loading: (AsyncValue<eos.CoinById>? previous) {
-                return const Center(child: CircularProgressIndicator());
+                return SizedBox(
+                    height: 30,
+                    width: 30,
+                    child: const Center(child: CircularProgressIndicator()));
               },
             ),
             SizedBox(
-              height: 70.h,
+              height: 45.h,
             ),
             vm.when(
               data: (data) {
@@ -103,7 +109,8 @@ class CoinDisplayScreen extends HookConsumerWidget {
                 return Text(error.toString());
               },
               loading: (AsyncValue<eos.CoinById>? previous) {
-                return const Center(child: CircularProgressIndicator());
+                return const SizedBox(
+                    height: 250, width: 280, child: TickerLoading());
               },
             ),
             SizedBox(
@@ -186,6 +193,7 @@ class DisplayScreenBar extends HookConsumerWidget {
           onTap: () {
             context.popView();
             ref.refresh(allCoinProvider);
+            ref.refresh(trendingCoinProvider);
           },
           child: Container(
             height: 40.h,
@@ -232,7 +240,8 @@ class DisplayScreenBar extends HookConsumerWidget {
             return Text(error.toString());
           },
           loading: (AsyncValue<eos.CoinById>? previous) {
-            return const Center(child: CircularProgressIndicator());
+            return const SizedBox(
+                height: 30, width: 30, child: CircularProgressIndicator());
           },
         ),
         Container(
@@ -250,5 +259,31 @@ class DisplayScreenBar extends HookConsumerWidget {
         )
       ],
     );
+  }
+}
+
+class TickerLoading extends HookWidget {
+  const TickerLoading({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+        baseColor: Colors.grey,
+        highlightColor: Colors.grey.shade50,
+        enabled: true,
+        child: Container(
+          width: 100,
+          height: 100,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: const [
+              BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 4,
+                  spreadRadius: 0,
+                  offset: Offset(2, 2))
+            ],
+          ),
+        ));
   }
 }
