@@ -44,17 +44,22 @@ class CryptoList extends HookConsumerWidget {
             ).createShader(bound);
           },
           blendMode: BlendMode.dstOut,
-          child: ListView.separated(
-            itemCount: coin.length,
-            itemBuilder: (context, index) {
-              final coins = coin[index];
-              return CryptoBuild(coinList: coins);
+          child: RefreshIndicator(
+            onRefresh: () async {
+              ref.refresh(allCoinProvider);
             },
-            separatorBuilder: (BuildContext context, int index) {
-              return SizedBox(
-                height: 25.h,
-              );
-            },
+            child: ListView.separated(
+              itemCount: coin.length,
+              itemBuilder: (context, index) {
+                final coins = coin[index];
+                return CryptoBuild(coinList: coins);
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return SizedBox(
+                  height: 25.h,
+                );
+              },
+            ),
           ),
         ),
       );
@@ -81,46 +86,49 @@ class _LoadingAnimationState extends State<LoadingAnimation> {
       child: ListView.separated(
         itemCount: 7,
         itemBuilder: (_, __) {
-          return Row(
-            // crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: 48.0,
-                height: 48.0,
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle, color: Colors.black26),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: 8.0,
-                    color: Colors.black26,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 5.0),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    height: 8.0,
-                    color: Colors.black26,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 2.0),
-                  ),
-                  Container(
-                    width: 40.0,
-                    height: 8.0,
-                    color: Colors.black26,
-                  ),
-                ],
-              ))
-            ],
+          return Padding(
+            padding: const EdgeInsets.only(left: 23, right: 23),
+            child: Row(
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 48.0,
+                  height: 48.0,
+                  decoration: const BoxDecoration(
+                      shape: BoxShape.circle, color: Colors.black26),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: 8.0,
+                      color: Colors.black26,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 5.0),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 8.0,
+                      color: Colors.black26,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 2.0),
+                    ),
+                    Container(
+                      width: 40.0,
+                      height: 8.0,
+                      color: Colors.black26,
+                    ),
+                  ],
+                ))
+              ],
+            ),
           );
         },
         separatorBuilder: (BuildContext context, int index) {

@@ -1,3 +1,4 @@
+import 'package:crypto_mobile/ui/component/dismiss.dart';
 import 'package:crypto_mobile/ui/screens/cryptolist.dart';
 import 'package:crypto_mobile/ui/theme/app_theme_state.dart';
 import 'package:crypto_mobile/ui/trendinglist/trending_list.dart';
@@ -14,58 +15,60 @@ class HomePage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isEnabled = ref.watch(appThemeStateProvider);
-    return Scaffold(
-      // backgroundColor: const Color(0xff171520),
-      floatingActionButton: FloatingActionButton(
-        child: isEnabled
-            ? const Icon(
-                Icons.dark_mode_outlined,
-              )
-            : const Icon(
-                Icons.light_mode_outlined,
-              ),
-        onPressed: () {
-          ref.read(appThemeStateProvider.notifier).toggleTheme();
-        },
-        backgroundColor: Colors.black,
-      ),
-
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.only(left: 0.w, right: 0.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 20.h,
-              ),
-              // const AppBarr(),
-              SizedBox(
-                height: 30.h,
-              ),
-              // const TopDisplay(),
-
-              const SearchBar(),
-              SizedBox(
-                height: 40.h,
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 30.w, right: 30.w),
-                child: const Text(
-                  'Trending Coins',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+    return DismissKeyboard(
+      child: Scaffold(
+        // backgroundColor: const Color(0xff171520),
+        floatingActionButton: FloatingActionButton(
+          child: isEnabled
+              ? const Icon(
+                  Icons.dark_mode_outlined,
+                )
+              : const Icon(
+                  Icons.light_mode_outlined,
                 ),
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              const TrendingList(),
+          onPressed: () {
+            ref.read(appThemeStateProvider.notifier).toggleTheme();
+          },
+          backgroundColor: Colors.black,
+        ),
 
-              SizedBox(
-                height: 30.h,
-              ),
-              const CryptoList()
-            ],
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.only(left: 0.w, right: 0.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 20.h,
+                ),
+                // const AppBarr(),
+                SizedBox(
+                  height: 30.h,
+                ),
+                // const TopDisplay(),
+
+                const SearchBar(),
+                SizedBox(
+                  height: 40.h,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 30.w, right: 30.w),
+                  child: const Text(
+                    'Trending Coins',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                  ),
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                const TrendingList(),
+
+                SizedBox(
+                  height: 30.h,
+                ),
+                const CryptoList()
+              ],
+            ),
           ),
         ),
       ),
@@ -108,6 +111,7 @@ class SearchBar extends HookConsumerWidget {
                   Debounce.seconds(1,
                       () => ref.read(allCoinProvider.notifier).searchby(value));
                 },
+                onEditingComplete: () => FocusScope.of(context).unfocus(),
               ),
             ),
             Positioned(
