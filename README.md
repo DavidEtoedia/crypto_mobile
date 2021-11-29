@@ -1,16 +1,4 @@
 # crypto_mobile
 
-A new Flutter project.
+![New](https://user-images.githubusercontent.com/41623462/143921668-6582c3b1-9b26-47e8-b4ce-207493074da0.png)
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
