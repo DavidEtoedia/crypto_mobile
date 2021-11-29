@@ -35,39 +35,42 @@ class HomePage extends HookConsumerWidget {
         body: SafeArea(
           child: Padding(
             padding: EdgeInsets.only(left: 0.w, right: 0.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 20.h,
-                ),
-                // const AppBarr(),
-                SizedBox(
-                  height: 30.h,
-                ),
-                // const TopDisplay(),
-
-                const SearchBar(),
-                SizedBox(
-                  height: 40.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 30.w, right: 30.w),
-                  child: const Text(
-                    'Trending Coins',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 20.h,
                   ),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                const TrendingList(),
+                  // const AppBarr(),
+                  SizedBox(
+                    height: 30.h,
+                  ),
+                  // const TopDisplay(),
 
-                SizedBox(
-                  height: 30.h,
-                ),
-                const CryptoList()
-              ],
+                  const SearchBar(),
+                  SizedBox(
+                    height: 40.h,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 30.w, right: 30.w),
+                    child: Text(
+                      'Trending Coins',
+                      style: TextStyle(
+                          fontSize: 18.sp, fontWeight: FontWeight.w400),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  const TrendingList(),
+
+                  SizedBox(
+                    height: 30.h,
+                  ),
+                  const CryptoList()
+                ],
+              ),
             ),
           ),
         ),

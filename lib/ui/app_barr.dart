@@ -15,21 +15,6 @@ class AppBarr extends HookConsumerWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        // Container(
-        //   height: 60.h,
-        //   width: 60.w,
-        //   decoration: BoxDecoration(
-        //       boxShadow: const [
-        //         BoxShadow(
-        //             color: Colors.black12, blurRadius: 5, offset: Offset(1, 1))
-        //       ],
-        //       shape: BoxShape.circle,
-        //       color: isEnabled ? const Color(0xff201f28) : Colors.grey[300]),
-        //   child: Icon(
-        //     Icons.chevron_left_outlined,
-        //     color: isEnabled ? Colors.white : Colors.black,
-        //   ),
-        // ),
         Text('Live prices',
             style: GoogleFonts.asap(
                 color: isEnabled ? Colors.white : Colors.black,

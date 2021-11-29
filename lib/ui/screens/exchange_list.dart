@@ -1,4 +1,5 @@
 import 'package:crypto_mobile/core/model/exchanges.dart';
+import 'package:crypto_mobile/ui/theme/app_theme_state.dart';
 import 'package:crypto_mobile/ui/vm/excchange_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -14,11 +15,13 @@ class ExchangeScreen extends HookConsumerWidget {
     final vm = ref.watch(exchangeListProvider);
     return vm.when(idle: () {
       return const Center(
-        child: CircularProgressIndicator(),
+        child: Loading(),
       );
     }, loading: () {
-      return const Center(
-        child: CircularProgressIndicator(),
+      return SizedBox(
+        height: 200,
+        width: MediaQuery.of(context).size.width,
+        child: const Loading(),
       );
     }, success: (data) {
       return SizedBox(
@@ -39,18 +42,18 @@ class ExchangeScreen extends HookConsumerWidget {
   }
 }
 
-class ExchangeBuild extends StatelessWidget {
+class ExchangeBuild extends HookConsumerWidget {
   final Exchanges exchanges;
   const ExchangeBuild({Key? key, required this.exchanges}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isEnabled = ref.watch(appThemeStateProvider);
     return Container(
-      margin: EdgeInsets.only(top: 10, bottom: 10),
+      margin: const EdgeInsets.only(top: 10, bottom: 10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Color(0xff201f28),
-      ),
+          borderRadius: BorderRadius.circular(10),
+          color: isEnabled ? const Color(0xff201f28) : Colors.grey[300]),
       height: 55,
       child: Container(
         margin: const EdgeInsets.only(left: 20, top: 10, bottom: 10),
@@ -66,7 +69,7 @@ class ExchangeBuild extends StatelessWidget {
             ),
             Text(
               exchanges.name!,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
             )
           ],
         ),
@@ -75,14 +78,9 @@ class ExchangeBuild extends StatelessWidget {
   }
 }
 
-class LoadingAnimation extends StatefulWidget {
-  const LoadingAnimation({Key? key}) : super(key: key);
+class Loading extends HookWidget {
+  const Loading({Key? key}) : super(key: key);
 
-  @override
-  _LoadingAnimationState createState() => _LoadingAnimationState();
-}
-
-class _LoadingAnimationState extends State<LoadingAnimation> {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
@@ -90,19 +88,13 @@ class _LoadingAnimationState extends State<LoadingAnimation> {
       highlightColor: Colors.grey.shade50,
       enabled: true,
       child: ListView.separated(
-        itemCount: 7,
+        itemCount: 3,
         itemBuilder: (_, __) {
           return Padding(
-            padding: const EdgeInsets.only(left: 23, right: 23),
+            padding: const EdgeInsets.only(left: 0, right: 0),
             child: Row(
               // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: 48.0,
-                  height: 48.0,
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.black26),
-                ),
                 const SizedBox(
                   width: 10,
                 ),
@@ -111,25 +103,12 @@ class _LoadingAnimationState extends State<LoadingAnimation> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      width: double.infinity,
-                      height: 8.0,
-                      color: Colors.black26,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5.0),
-                    ),
-                    Container(
-                      width: double.infinity,
-                      height: 8.0,
-                      color: Colors.black26,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 2.0),
-                    ),
-                    Container(
-                      width: 40.0,
-                      height: 8.0,
-                      color: Colors.black26,
+                      width: MediaQuery.of(context).size.width,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.black26,
+                      ),
                     ),
                   ],
                 ))
