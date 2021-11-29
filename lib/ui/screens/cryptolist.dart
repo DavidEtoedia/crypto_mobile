@@ -14,40 +14,41 @@ class CryptoList extends HookConsumerWidget {
 
     return vm.when(loading: () {
       return SizedBox(
-          height: 500.h, width: 400.w, child: const LoadingAnimation());
+          height: 440.h, width: 400.w, child: const LoadingAnimation());
     }, idle: () {
       return SizedBox(
-          height: 400.h, width: 400.w, child: const LoadingAnimation());
+          height: 300.h, width: 400.w, child: const LoadingAnimation());
 
       // Center(
       //   child: CircularProgressIndicator(),
       // );
     }, success: (coin) {
-      return Expanded(
-        child: ShaderMask(
-          shaderCallback: (Rect bound) {
-            return const LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.purple,
-                Colors.transparent,
-                Colors.transparent,
-                Colors.purple
-              ],
-              stops: [
-                0.0,
-                0.02,
-                0.8,
-                1.0
-              ], // 10% purple, 80% transparent, 10% purple
-            ).createShader(bound);
+      return ShaderMask(
+        shaderCallback: (Rect bound) {
+          return const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.purple,
+              Colors.transparent,
+              Colors.transparent,
+              Colors.purple
+            ],
+            stops: [
+              0.0,
+              0.02,
+              0.8,
+              1.0
+            ], // 10% purple, 80% transparent, 10% purple
+          ).createShader(bound);
+        },
+        blendMode: BlendMode.dstOut,
+        child: RefreshIndicator(
+          onRefresh: () async {
+            ref.refresh(allCoinProvider);
           },
-          blendMode: BlendMode.dstOut,
-          child: RefreshIndicator(
-            onRefresh: () async {
-              ref.refresh(allCoinProvider);
-            },
+          child: SizedBox(
+            height: 400,
             child: ListView.separated(
               itemCount: coin.length,
               itemBuilder: (context, index) {
@@ -84,7 +85,7 @@ class _LoadingAnimationState extends State<LoadingAnimation> {
       highlightColor: Colors.grey.shade50,
       enabled: true,
       child: ListView.separated(
-        itemCount: 7,
+        itemCount: 6,
         itemBuilder: (_, __) {
           return Padding(
             padding: const EdgeInsets.only(left: 23, right: 23),
